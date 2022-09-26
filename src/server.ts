@@ -19,16 +19,23 @@ app.get("/users",async(req,res)=>{
 
 app.post("/sign-up",async(req,res)=>{
     try{
-      const user = await prisma.user.create({
-      data: {
-        email: req.body.email,
-        name: req.body.name,
-        password: bcrypt.hashSync(req.body.password),
-      },
-    });
-        res.send(user)
+      const inputedEmail = await prisma.user.findUnique({where:{email:req.body.email}})
+      if(inputedEmail){
+        res.status(404).send({error:"Account exists!"})
+      }else{
+        const user = await prisma.user.create({
+          data: {
+            email: req.body.email,
+            name: req.body.name,
+            password: bcrypt.hashSync(req.body.password),
+          },
+        });
+        res.send(user);
+      }
+      
     }catch(error){
-      res.status(404).send({error:"Unclear data"})
+      //@ts-ignore
+      res.status(404).send({error:error.message})
     }
 })
 
