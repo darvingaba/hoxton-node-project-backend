@@ -77,6 +77,11 @@ app.get("/validate", async (req, res) => {
   }
 });
 
+app.get("/nfts",async(req,res)=>{
+  const nfts = await prisma.nft.findMany()
+  res.send(nfts)
+})
+
 app.listen(port,()=>{
     console.log("server up")
 })
