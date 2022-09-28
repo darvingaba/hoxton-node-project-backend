@@ -88,7 +88,7 @@ app.get( "/nfts/:id", async (req, res) => {
       id: Number(req.params.id),
     },
   });
-  res.send(nft);
+  res.send(nft) ;
 });
 
 app.listen(port,()=>{
