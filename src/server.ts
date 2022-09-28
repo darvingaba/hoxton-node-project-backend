@@ -86,6 +86,15 @@ app.get("/nfts/:id",async(req,res)=>{
   res.send(nft)
 })
 
+app.get( "/nfts/:id", async (req, res) => {
+  const nft = await prisma.nft.findUnique({
+    where: {
+      id: Number(req.params.id),
+    },
+  });
+  res.send(nft) ;
+});
+
 app.listen(port,()=>{
     console.log("server up")
 })
