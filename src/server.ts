@@ -29,10 +29,10 @@ app.get("/users", async (req, res) => {
   const users = await prisma.user.findMany({ include: { nfts: true } });
   res.send(users);
 });
-app.get("/users/:id", async (req, res) => {
-  const users = await prisma.user.findUnique({where:{id:Number(req.params.id)},include:{nfts:true}});
-  res.send(users);
-});
+// app.get("/users/:id", async (req, res) => {
+//   const users = await prisma.user.findUnique({where:{id:Number(req.params.id)},include:{nfts:true}});
+//   res.send(users);
+// });
 
 app.post("/sign-up", async (req, res) => {
   try {
@@ -97,6 +97,20 @@ app.get("/nfts/:id", async (req, res) => {
     include: { user: true },
   });
   res.send(nft);
+});
+app.get("/users/:id", async (req, res) => {
+  try{
+    const user = await prisma.user.findUnique({
+    where: {
+      id:Number(req.params.id),
+    },
+    include: { nfts: true },
+  });
+  res.send(user);
+  }catch(error){
+    // @ts-ignore
+    res.status(404).send({ erro: error.message });
+  }
 });
 
 app.patch("/nfts/:id", async (req, res) => {
