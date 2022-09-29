@@ -24,6 +24,6 @@ model Nft {
   price       String
   description String
   image       String
-  User        User?  @relation(fields: [userId], references: [id])
-  userId      Int?
+  user        User @relation(fields: [userId], references: [id])
+  userId      Int
 }
