@@ -132,7 +132,7 @@ app.patch("/nfts/:id", async (req, res) => {
 
 app.patch("/users/:id",async(req,res)=>{
   try{
-    const email = req.body.email
+  const email = req.body.email
   const password = req.body.password
   const updatedProfile = await prisma.user.update(
     {where:{
