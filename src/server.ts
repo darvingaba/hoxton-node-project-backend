@@ -113,6 +113,15 @@ app.get("/users/:id", async (req, res) => {
   }
 });
 
+app.get("/ownedNfts",async(req,res)=>{
+  const userId = req.body.id
+  const ownedNfts = await prisma.nft.findMany(
+    {where:
+      {userId:userId}}
+      )
+  res.send(ownedNfts)
+})
+
 app.patch("/nfts/:id", async (req, res) => {
   try {
     const id = Number(req.params.id);
