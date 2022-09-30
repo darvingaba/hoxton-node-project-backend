@@ -130,6 +130,25 @@ app.patch("/nfts/:id", async (req, res) => {
   }
 });
 
+app.patch("/users/:id",async(req,res)=>{
+  try{
+    const email = req.body.email
+  const password = req.body.password
+  const updatedProfile = await prisma.user.update(
+    {where:{
+      id:Number(req.params.id)
+    },data:{
+      email:email,
+      password:bcrypt.hashSync(password)
+    }
+  })
+  res.send(updatedProfile)
+  }catch(error){
+    //@ts-ignore
+    res.status(404).send({error:error.message})
+  }
+})
+
 app.listen(port, () => {
   console.log("server up");
 });
